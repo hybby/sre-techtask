@@ -3,6 +3,7 @@
 A utility to make HTTP(S) requests to specified URLs and report on the results
 """
 import sys
+from validator_collection import checkers
 USAGE = "Usage: ./sreport.py < urls.txt"
 
 
@@ -20,7 +21,10 @@ def validate_url(url):
     """
     Determine if a given URL is valid.  Return True if so, False if not
     """
-    return url
+    if not url:
+        raise ValueError("No url provided")
+
+    return checkers.is_url(url)
 
 
 if __name__ == "__main__":
