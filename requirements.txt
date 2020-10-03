@@ -1,3 +1,4 @@
+json
 pytest
 pycodestyle
 pylint
