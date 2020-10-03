@@ -23,9 +23,11 @@ if __name__ == "__main__":
             "This program only accepts input via stdin\n{}".format(USAGE)
         )
 
+    with sys.stdin as stdin:
+        urls = parse_input(stdin.read())
+
     # requirements:
     #
-    # - parse input
     # - for each url:
     #   - validate url
     #   - make GET request
