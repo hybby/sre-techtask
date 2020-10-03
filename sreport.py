@@ -6,6 +6,13 @@ import sys
 USAGE = "Usage: ./sreport.py < urls.txt"
 
 
+def parse_input(input_):
+    """
+    Given an input string, return a list of strings split by newline character
+    """
+    return input_
+
+
 if __name__ == "__main__":
     # requirement: program is run from command line and takes input from stdin
     if sys.stdin.isatty():
