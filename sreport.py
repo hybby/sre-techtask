@@ -10,7 +10,10 @@ def parse_input(input_):
     """
     Given an input string, return a list of strings split by newline character
     """
-    return input_
+    if len(input_) <= 0:
+        raise ValueError("No input provided")
+
+    return input_.splitlines()
 
 
 if __name__ == "__main__":
