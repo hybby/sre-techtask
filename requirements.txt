@@ -1,0 +1,4 @@
+pytest
+pycodestyle
+pylint
+validator_collection
