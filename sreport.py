@@ -34,6 +34,12 @@ def process_url(url):
     we're interested in, such as date/time of response, status code and length
     """
     output = {}
+
+    if not validate_url(url):
+        output['Url'] = url
+        output['Error'] = 'invalid url'
+        return json.dumps(output, indent=4)
+
     return json.dumps(output, indent=4)
 
 
