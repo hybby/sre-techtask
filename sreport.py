@@ -16,6 +16,13 @@ def parse_input(input_):
     return input_.splitlines()
 
 
+def validate_url(url):
+    """
+    Determine if a given URL is valid.  Return True if so, False if not
+    """
+    return url
+
+
 if __name__ == "__main__":
     # requirement: program is run from command line and takes input from stdin
     if sys.stdin.isatty():
