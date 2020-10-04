@@ -78,14 +78,14 @@ def process_url(url, timeout_secs=10):
     return output
 
 
-def output_json(report):
+def output_json(output):
     """
-    Given a report on a URL from process_url(), output it in a JSON format
+    Given a dict or a list, output it to stdout as a JSON document
     """
-    if isinstance(report, (dict, list)):
-        print(json.dumps(report, indent=4))
-    else:
+    if not isinstance(output, (dict, list)):
         raise TypeError("input must be dict or list")
+
+    print(json.dumps(output, indent=4))
 
 
 if __name__ == "__main__":
