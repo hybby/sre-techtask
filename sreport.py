@@ -3,6 +3,7 @@
 A utility to make HTTP(S) requests to specified URLs and report on the results
 """
 import sys
+import requests
 from validator_collection import checkers
 USAGE = "Usage: ./sreport.py < urls.txt"
 
@@ -27,16 +28,37 @@ def validate_url(url):
     return checkers.is_url(url)
 
 
-def process_url(url):
+def process_url(url, timeout_secs=10):
     """
     Given a URL, attempt to make a request to it and return information that
     we're interested in, such as date/time of response, status code and length
     """
     output = {}
+    output['Url'] = url
 
     if not validate_url(url):
-        output['Url'] = url
         output['Error'] = 'invalid url'
+        return output
+
+    # attempt a request and deal with common exceptions we may encounter and
+    # wish to report upon. erroring out on other exceptions seems reasonable
+    # https://requests.readthedocs.io/en/master/_modules/requests/exceptions
+    try:
+        response = requests.get(  # pylint: disable=unused-variable
+            url,
+            allow_redirects=True,
+            timeout=timeout_secs
+        )
+    except requests.exceptions.SSLError:
+        output['Error'] = "ssl error"
+    except requests.exceptions.TooManyRedirects:
+        output['Error'] = "too many redirects"
+    except requests.exceptions.ConnectionError:
+        # catches dns failures and refused connections
+        output['Error'] = "connection error"
+    except requests.exceptions.Timeout:
+        # catches connection timeouts and read timeouts
+        output['Error'] = "timed out"
 
     return output
 
