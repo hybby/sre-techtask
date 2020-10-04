@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/hybby/sre-techtask.svg?branch=main)](https://travis-ci.org/hybby/sre-techtask)
+[![Build Status](https://travis-ci.org/hybby/sreport.svg?branch=main)](https://travis-ci.org/hybby/sreport)
 
-# sre-techtask
+# sreport
 ## Overview
 A Python program to make HTTP(S) requests and report on the results.
 
