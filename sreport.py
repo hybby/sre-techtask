@@ -101,18 +101,3 @@ if __name__ == "__main__":
     for line in lines:
         result = process_url(line)
         output_json(result)
-
-    # requirements:
-    #
-    # - for each url:
-    #   - validate url
-    #   - make GET request
-    #   - output JSON object containing:
-    #     - if request is successful:
-    #       - url
-    #       - time/date of response
-    #       - http status code
-    #       - content length of response
-    #     - if rqeuest is invalid/unsuccessful
-    #       - url
-    #       - error message
