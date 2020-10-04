@@ -3,6 +3,7 @@
 A utility to make HTTP(S) requests to specified URLs and report on the results
 """
 import sys
+import json
 import requests
 from validator_collection import checkers
 USAGE = "Usage: ./sreport.py < urls.txt"
@@ -77,6 +78,16 @@ def process_url(url, timeout_secs=10):
     return output
 
 
+def output_json(report):
+    """
+    Given a report on a URL from process_url(), output it in a JSON format
+    """
+    if isinstance(report, (dict, list)):
+        print(json.dumps(report, indent=4))
+    else:
+        raise TypeError("input must be dict or list")
+
+
 if __name__ == "__main__":
     # requirement: program is run from command line and takes input from stdin
     if sys.stdin.isatty():
@@ -88,7 +99,8 @@ if __name__ == "__main__":
         lines = parse_input(stdin.read())
 
     for line in lines:
-        process_url(line)
+        result = process_url(line)
+        output_json(result)
 
     # requirements:
     #
