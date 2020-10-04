@@ -51,14 +51,28 @@ def process_url(url, timeout_secs=10):
         )
     except requests.exceptions.SSLError:
         output['Error'] = "ssl error"
+        return output
     except requests.exceptions.TooManyRedirects:
         output['Error'] = "too many redirects"
+        return output
     except requests.exceptions.ConnectionError:
         # catches dns failures and refused connections
         output['Error'] = "connection error"
+        return output
     except requests.exceptions.Timeout:
         # catches connection timeouts and read timeouts
         output['Error'] = "timed out"
+        return output
+
+    # build our output message, adding attributes if they're available
+    if response.status_code:
+        output['Status_code'] = response.status_code
+
+    if 'Content-Length' in response.headers:
+        output['Content_length'] = response.headers['Content-Length']
+
+    if 'Date' in response.headers:
+        output['Date'] = response.headers['Date']
 
     return output
 
