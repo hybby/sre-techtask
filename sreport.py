@@ -78,6 +78,38 @@ def process_url(url, timeout_secs=10):
     return output
 
 
+def generate_summary(summary):
+    """
+    Given a dictionary of status codes and occurrances, generate a report
+    object (array of objects) that summarises a count of overall responses
+    along with a breakdown of counts of different response codes.
+    """
+    if not isinstance(summary, dict):
+        raise TypeError("input must be dict")
+
+    overall_responses = 0
+    output = []
+
+    for status_code, quantity in summary.items():
+        if not isinstance(status_code, int):
+            raise ValueError("bad input; response codes must be integers")
+
+        if not isinstance(quantity, int):
+            raise ValueError("bad input; response counts must be integers")
+
+        overall_responses = overall_responses + quantity
+        output.append({
+            'Status_code': status_code,
+            'Number_of_responses': quantity
+        })
+
+    output.append({
+        'Number_of_responses': overall_responses
+    })
+
+    return output
+
+
 def output_json(output):
     """
     Given a dict or a list, output it to stdout as a JSON document
@@ -98,6 +130,19 @@ if __name__ == "__main__":
     with sys.stdin as stdin:
         lines = parse_input(stdin.read())
 
+    stats = {}
     for line in lines:
         result = process_url(line)
         output_json(result)
+
+        # if we recieved a successful response, increment our stats counter
+        # presence of a 'Status_code' attribute means a valid response
+        if 'Status_code' in result:
+            if result['Status_code'] in stats:
+                stats[result['Status_code']] = stats[result['Status_code']] + 1
+            else:
+                stats[result['Status_code']] = 1
+
+    # build our summary document
+    report = generate_summary(stats)
+    output_json(report)
