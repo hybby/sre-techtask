@@ -2,7 +2,6 @@
 """
 A utility to make HTTP(S) requests to specified URLs and report on the results
 """
-import json
 import sys
 from validator_collection import checkers
 USAGE = "Usage: ./sreport.py < urls.txt"
@@ -38,9 +37,8 @@ def process_url(url):
     if not validate_url(url):
         output['Url'] = url
         output['Error'] = 'invalid url'
-        return json.dumps(output, indent=4)
 
-    return json.dumps(output, indent=4)
+    return output
 
 
 if __name__ == "__main__":
