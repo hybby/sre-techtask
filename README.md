@@ -83,3 +83,12 @@ Build a container and run the tests by running:
 ```
 make dockertest
 ```
+
+### Testing (Travis CI)
+The tests are also run nightly via Travis CI.
+
+For the build to pass, it is expected that all stages of the `make test` target
+will succeed.
+
+Clicking the badge at the top of this readme can be used to determine which
+versions of Python the script is tested against.
