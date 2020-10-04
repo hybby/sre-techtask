@@ -117,3 +117,64 @@ def test_too_many_redirects_output(requests_mock):
     }
 
     assert process_url(url) == expected_output
+
+
+def test_40x_50x_output(requests_mock):
+    """
+    Tests whether we output correctly for common HTTP 40x and 50x responses
+    We expect the URL, status code and datetime of the response to be returned
+    """
+    url = "http://not.exists.bbc.co.uk/"
+    codes = [
+        400,  # bad request
+        401,  # unauthorized
+        403,  # forbidden
+        404,  # not found
+        500,  # internal server error
+        502,  # bad gateway
+        503,  # service unavailable
+        504   # gateway timeout
+    ]
+
+    for code in codes:
+        requests_mock.get(
+            url,
+            status_code=code,
+            headers={'Date': 'Sat, 03 Oct 2020 17:32:59 GMT'}
+        )
+
+        expected_output = {
+          "Url": url,
+          "Status_code": code,
+          "Date": "Sat, 03 Oct 2020 17:32:59 GMT"
+        }
+
+        assert process_url(url) == expected_output
+
+
+def test_200_output(requests_mock):
+    """
+    Tests whether we output the correct message for HTTP 200 responses
+    We expect the URL, status code, datetime of the response and the content
+    length of the response to be returned.
+
+    As we always follow redirects, we won't test HTTP 301 responses.
+    """
+    url = "http://www.example.com"
+    requests_mock.get(
+        url,
+        status_code=200,
+        headers={
+            'Date': 'Sat, 03 Oct 2020 17:32:59 GMT',
+            'Content-Length': '12345'
+        }
+    )
+
+    expected_output = {
+      "Url": url,
+      "Status_code": 200,
+      "Content_length": '12345',
+      "Date": "Sat, 03 Oct 2020 17:32:59 GMT"
+    }
+
+    assert process_url(url) == expected_output
