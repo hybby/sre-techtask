@@ -1,4 +1,4 @@
-PROJECT = sre-techtask
+PROJECT = sreport
 DESCRIPTION = A Python program to make HTTP(S) requests and report on the results
 BOLD :=  $(shell tput bold)
 RESET :=  $(shell tput sgr0)
@@ -19,5 +19,9 @@ test:  ## Run unit tests and code style checks
 
 	@printf "\n$(BOLD)Running unit tests (py.test)$(RESET)\n"
 	py.test tests
+
+dockertest:  ## Build and run tests inside a Docker container
+	docker build . --tag $(PROJECT):latest
+	docker run -t --rm $(PROJECT):latest
 
 .PHONY: help init test

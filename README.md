@@ -61,15 +61,25 @@ echo "https://www.gmail.com"  >> urls.txt
 ./sreport.py < urls.txt
 ```
 
-### Testing
+### Testing (Local)
 The following tests are provided:
 
   * `pycodestyle` - ([PEP8](http://www.python.org/dev/peps/pep-0008/)) code style checks
   * `pylint` - Code linting checks
   * `pytest` - Unit tests
 
-These can be run by using the provided Makefile:
+These can be run locally using the Makefile, assuming the installation steps
+have been performed
 
 ```
 make test
+```
+
+### Testing (Docker)
+The tests can be run inside a `python:3` Docker container.
+
+Build a container and run the tests by running:
+
+```
+make dockertest
 ```
