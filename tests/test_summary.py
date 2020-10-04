@@ -1,5 +1,5 @@
 """
-Unit tests for the sreport.py utility
+Unit tests for the sreport.py utility relating to summary report generation
 """
 import pytest
 from sreport import generate_summary

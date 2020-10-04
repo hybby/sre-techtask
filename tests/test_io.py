@@ -1,16 +1,24 @@
 """
-Unit tests for the sreport.py utility
+Unit tests for the sreport.py utility relating to input/output operations
 """
 import pytest
 from sreport import parse_input, output_json
 
 
-def test_input():
+def test_split_newlines_input():
     """
     Tests that newline separated input is split into a list of strings
     """
     sample_input = "foo\nbar"
     assert parse_input(sample_input) == ['foo', 'bar']
+
+
+def test_no_newlines_input():
+    """
+    Tests that input with no newlines becomes a one item list
+    """
+    sample_input = "foobar"
+    assert parse_input(sample_input) == ['foobar']
 
 
 def test_no_input():

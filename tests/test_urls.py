@@ -1,5 +1,5 @@
 """
-Unit tests for the sreport.py utility
+Unit tests for the sreport.py utility relating to URL processing
 """
 import pytest
 import requests
