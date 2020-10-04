@@ -1,5 +1,6 @@
-json
 pytest
 pycodestyle
 pylint
+requests
+requests_mock
 validator_collection
