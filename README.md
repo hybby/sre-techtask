@@ -37,15 +37,26 @@ make
 ```
 
 ### Installation
-This script requires Python 3.
+This script requires Python 3.  It is recommended that you perform the
+installation of the script's requirements into a Virtual Environment (`venv`)
+to avoid the possibility of requirements clashing with your system Python.
 
 Install the script's dependencies:
 
 ```
+virtualenv --python=$(which python3) venv
+source venv/bin/activate
 make requirements
 ```
 
 ### Running
+If you've installed the script's requirements in a Virtual Environment, ensure
+that it is enabled before running the script:
+
+```
+source venv/bin/activate
+```
+
 #### One URL
 ```
 echo "https://www.google.com" | ./sreport.py
