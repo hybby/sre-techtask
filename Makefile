@@ -11,14 +11,14 @@ requirements:  ## Install dependencies required to run and test this script
 	pip3 install -r requirements.txt
 
 test:  ## Run unit tests and code style checks
+	@printf "\n$(BOLD)Running unit tests (py.test)$(RESET)\n"
+	py.test tests
+
 	@printf "$(BOLD)Running pycodestyle...$(RESET)\n"
 	find . -name '*.py' ! -path './venv/*' -exec pycodestyle {} +;
 
 	@printf "\n$(BOLD)Running pylint...$(RESET)\n"
 	find . -name '*.py' ! -path './venv/*' -exec pylint {} +;
-
-	@printf "\n$(BOLD)Running unit tests (py.test)$(RESET)\n"
-	py.test tests
 
 dockertest:  ## Build and run tests inside a Docker container
 	docker build . --tag $(PROJECT):latest
