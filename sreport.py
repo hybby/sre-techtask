@@ -37,7 +37,7 @@ def process_url(url, timeout_secs=10):
     output = {}
     output['Url'] = url
 
-    if not validate_url(url):
+    if validate_url(url):
         output['Error'] = 'invalid url'
         return output
 
